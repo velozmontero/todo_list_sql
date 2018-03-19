@@ -1,0 +1,12 @@
+{
+  "name": "todo_list",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "author": "\"Frank Veloz Montero\"",
+  "license": "ISC"
+}
