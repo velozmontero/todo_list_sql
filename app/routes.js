@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = function(app, database) {
 
   app.get('/', function (req, res) {
@@ -8,7 +10,7 @@ module.exports = function(app, database) {
     });
   });
 
-  app.get('/get-tasks', function (req, res) {
+  app.get('/get-todos', function (req, res) {
   
     database.query(
       `SELECT * FROM todos`, 
@@ -16,7 +18,7 @@ module.exports = function(app, database) {
 
       if (error) throw error;
 
-      console.log('results: ', results);
+      // console.log('results: ', results);
 
       res.render('todos.ejs', {
         todos: results
@@ -25,26 +27,42 @@ module.exports = function(app, database) {
 
   });
 
-  app.post('/create-task', function (req, res) {
+  app.post('/create-todo', function (req, res) {
     
+    console.log('data ', req.body);
+    var task = req.body.task;
+
     database.query(
       `INSERT INTO todos(task, date, complete, uid, due_date) 
-       VALUES('code some good stuff', CURRENT_TIMESTAMP(), false, 'sd9f87sdf76s7d6fsdf67sd', CURDATE())`, 
-      function (error, results, fields) {
+       VALUES('${task}', '${moment().format()}', false, 'sd9f87sdf76s7d6fsdf67sd', '${moment().add(7, "days").format('YYYY/MM/DD')}')`, 
+      function (error, result, fields) {
 
-      if (error) throw error;
+        if (error) {
+          console.log('error ', error);
 
-      console.log('result: ', results);
+          res.send({
+            success: false,
+            error: error
+          });
+        }
+        else {
+          console.log('result: ', result);
 
+          res.send({
+            success: true,
+            result: result
+          });
+        }
+        
     });
 
   });
 
-  app.post('/update-task', function (req, res) {
+  app.post('/update-todo', function (req, res) {
 
   });
 
-  app.post('/delete-task', function (req, res) {
+  app.post('/delete-todo', function (req, res) {
 
   });
 

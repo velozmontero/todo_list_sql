@@ -5,14 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Todo App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
   </head>
   <body>
-    <% if (user) { %>
-      <h2>
-        <%= user.name %>
-      </h2>
-    <% } %>
-    <script src="./assets/js/main.js"></script>
+    <div class="home-screen">
+      <% if (user) { %>
+        <h1>
+          Hi
+          <%= user.name %>!
+        </h1>
+      <% } %>
+
+      <a href="/get-todos" class="btn">Get Started</a>
+    </div>
+
   </body>
 </html>
