@@ -1,7 +1,7 @@
 $(document).ready(function(){
   const scroll = () => $('#todos_container').scrollTop($('#todos_container')[0].scrollHeight);
 
-  const createTodo = () => {
+  const createTodo = function() {
     let task = $('#todo_input').val();
     if (task) {
       $.post("/create-todo", {
@@ -30,9 +30,48 @@ $(document).ready(function(){
     }
   }
 
-  $('#btn').on('click', function(){
-    createTodo();
-  });
+  const removeTodo = function(e) {
+    let id = $(this).parent()[0].id;
+
+    $.post("/delete-todo", {
+      id: id
+    }, function (response) {
+      if (response.success) {
+        $('#' + response.id).remove();
+      }
+      else {
+        alert(response.message);
+      }
+    });
+  }
+
+  const updateTodo = function (e) {
+
+    let id = $(this).parent()[0].id;
+    let complete = $(this).data('complete');
+
+    console.log('complete ', complete);
+
+    if (complete === false) {
+      $.post("/update-todo", {
+        id: id
+      }, function (response) {
+        if (response.success) {
+          $('#' + response.id).addClass('checked');
+        }
+        else {
+          alert(response.message);
+        }
+      });
+    }
+
+  }
+
+  $('.remove').on('click', removeTodo);
+
+  $('.todo').on('click', updateTodo);
+
+  $('#btn').on('click', createTodo);
 
   $('#todo_input').on('keyup', function (e) {
     if(e.keyCode === 13){

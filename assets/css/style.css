@@ -114,6 +114,37 @@ a {
   margin: 20px 0px;
 }
 
+.todo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-container:hover .remove{
+  right: 0;
+}
+
+.remove {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -60px;
+  height: 100%;
+  width: 60px;
+  font-size: 25px;
+  transition: right 450ms;
+  cursor: pointer; 
+}
+
+.checked {
+  text-decoration: line-through;
+}
+
+.checked>.todo {
+  color: #000;
+}
+
 /* Scroll Bar */
 .cool-scroll-bar-17::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -125,5 +156,5 @@ a {
   background-color: rgba(0, 0, 0, 0); }
 
 .cool-scroll-bar-17::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 178, 178, 0.72);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px; }

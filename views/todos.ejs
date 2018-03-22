@@ -23,9 +23,14 @@
 
       <div id="todos_container" class="todos-container cool-scroll-bar-17">
         <% if (todos.length) { %>
-          <% for(var i=0; i < todos.length; i++) {%>
-            <div class="todo">
-              <%= todos[i].task %>
+          <% for(var i = 0; i < todos.length; i++) {%>
+            <div id="<%= todos[i].id %>" class="todo-container <% if (todos[i].complete) { %> checked <% } %>">
+              <div class="remove">
+                <span class="ion-close-round icon-remove"></span>
+              </div>
+              <div data-complete="<%= todos[i].complete %>" class="todo">
+                <%= todos[i].task %>
+              </div>
             </div>
           <% } %>
         <% } %>

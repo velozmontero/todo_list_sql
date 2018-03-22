@@ -60,16 +60,63 @@ module.exports = function(app, database) {
             todo: todo
           });
         }
-        
     });
 
   });
 
   app.post('/update-todo', function (req, res) {
+    var id = req.body.id;
 
+    database.query(
+      `UPDATE todos SET complete = true WHERE id = ${id}`,
+      function (error, result, fields) {
+
+        if (error) {
+          console.log('error ', error);
+
+          res.send({
+            success: false,
+            error: error,
+            message: 'The todo was not updated :('
+          });
+        }
+        else {
+          console.log('result: ', result);
+
+          res.send({
+            success: true,
+            id: id
+          });
+        }
+
+      });
   });
 
   app.post('/delete-todo', function (req, res) {
+    var id = req.body.id;
+
+    database.query(
+      `DELETE FROM todos WHERE id = ${id}`,
+      function (error, result, fields) {
+
+        if (error) {
+          console.log('error ', error);
+
+          res.send({
+            success: false,
+            error: error,
+            message: 'The todo was not deleted :('
+          });
+        }
+        else {
+          console.log('result: ', result);
+         
+          res.send({
+            success: true,
+            id: id
+          });
+        }
+      });
 
   });
 
