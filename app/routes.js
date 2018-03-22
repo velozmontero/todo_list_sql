@@ -11,7 +11,6 @@ module.exports = function(app, database) {
   });
 
   app.get('/get-todos', function (req, res) {
-  
     database.query(
       `SELECT * FROM todos`, 
       function (error, results, fields) {
@@ -24,17 +23,23 @@ module.exports = function(app, database) {
         todos: results
       });
     });
-
   });
 
   app.post('/create-todo', function (req, res) {
     
     console.log('data ', req.body);
-    var task = req.body.task;
+
+    var todo = {
+      task: req.body.task,
+      date: moment().format(),
+      completed: false,
+      uid: 'sd9f87sdf76s7d6fsdf67sd',
+      due_date: moment().add(7, "days").format('YYYY/MM/DD')
+    }
 
     database.query(
       `INSERT INTO todos(task, date, complete, uid, due_date) 
-       VALUES('${task}', '${moment().format()}', false, 'sd9f87sdf76s7d6fsdf67sd', '${moment().add(7, "days").format('YYYY/MM/DD')}')`, 
+       VALUES('${todo.task}', '${todo.date}', ${todo.completed}, '${todo.uid}', '${todo.due_date}')`, 
       function (error, result, fields) {
 
         if (error) {
@@ -42,15 +47,17 @@ module.exports = function(app, database) {
 
           res.send({
             success: false,
-            error: error
+            error: error,
+            message: 'The todo was not created sorry :('
           });
         }
         else {
-          console.log('result: ', result);
+          // console.log('result: ', result);
+          todo.id = result.insertId;
 
           res.send({
             success: true,
-            result: result
+            todo: todo
           });
         }
         
@@ -64,6 +71,10 @@ module.exports = function(app, database) {
 
   app.post('/delete-todo', function (req, res) {
 
+  });
+
+  app.get('*', function (req, res) {
+    res.render('404.ejs');
   });
 
 }
