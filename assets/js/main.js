@@ -11,8 +11,13 @@ $(document).ready(function(){
           console.log('result ', response.todo);
 
           $('#todos_container').append(`
-            <div class="todo">
-              ${response.todo.task}
+            <div id="${response.todo.id}" class="todo-container ${response.todo.complete ? 'checked' : ''}">
+              <div class="remove">
+                <span class="ion-close-round icon-remove"></span>
+              </div>
+              <div data-complete="${response.todo.complete}" class="todo">
+                ${response.todo.task}
+              </div>
             </div>
           `);
 
@@ -32,6 +37,8 @@ $(document).ready(function(){
 
   const removeTodo = function(e) {
     let id = $(this).parent()[0].id;
+
+    console.log('removing ', id);
 
     $.post("/delete-todo", {
       id: id
@@ -67,9 +74,9 @@ $(document).ready(function(){
 
   }
 
-  $('.remove').on('click', removeTodo);
+  $('#todos_container').on('click', '.remove', removeTodo);
 
-  $('.todo').on('click', updateTodo);
+  $('#todos_container').on('click', '.todo', updateTodo);
 
   $('#btn').on('click', createTodo);
 

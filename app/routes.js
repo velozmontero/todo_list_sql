@@ -32,14 +32,14 @@ module.exports = function(app, database) {
     var todo = {
       task: req.body.task,
       date: moment().format(),
-      completed: false,
+      complete: false,
       uid: 'sd9f87sdf76s7d6fsdf67sd',
       due_date: moment().add(7, "days").format('YYYY/MM/DD')
     }
 
     database.query(
       `INSERT INTO todos(task, date, complete, uid, due_date) 
-       VALUES('${todo.task}', '${todo.date}', ${todo.completed}, '${todo.uid}', '${todo.due_date}')`, 
+       VALUES('${todo.task}', '${todo.date}', ${todo.complete}, '${todo.uid}', '${todo.due_date}')`, 
       function (error, result, fields) {
 
         if (error) {
